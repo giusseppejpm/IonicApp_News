@@ -26,4 +26,8 @@ export class DataLocalService {
       this.noticias = favoritos;
     }
   }
+  async elminarNoticia(noticia: Article) {
+    this.noticias = this.noticias.filter((el) => el.title !== noticia.title);
+    await this.storage.set("favoritos", this.noticias);
+  }
 }

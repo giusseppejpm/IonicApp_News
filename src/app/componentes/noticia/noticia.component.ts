@@ -43,15 +43,7 @@ export class NoticiaComponent implements OnInit {
             );
           },
         },
-        {
-          text: "Favoritos",
-          cssClass: "action-dark",
-          icon: "star",
-          handler: () => {
-            console.log("Favorito clicked");
-            this.dataLocal.guardarNoticia(this.noticia);
-          },
-        },
+        this.addRemoveFavorite(),
         {
           text: "Cancelar",
           icon: "close",
@@ -64,5 +56,32 @@ export class NoticiaComponent implements OnInit {
       ],
     });
     await actionSheet.present();
+  }
+  addRemoveFavorite() {
+    let favoriteBtn: any;
+    if (!this.noticia.favorite) {
+      favoriteBtn = {
+        text: "Agregar a Favoritos",
+        cssClass: "action-dark",
+        icon: "star",
+        handler: () => {
+          console.log("Favorito clicked");
+          this.noticia.favorite = true;
+          this.dataLocal.guardarNoticia(this.noticia);
+        },
+      };
+    } else {
+      favoriteBtn = {
+        text: "Eliminar de Favoritos",
+        cssClass: "action-dark",
+        icon: "trash",
+        handler: () => {
+          console.log("Favorito clicked");
+          this.noticia.favorite = false;
+          this.dataLocal.elminarNoticia(this.noticia);
+        },
+      };
+    }
+    return favoriteBtn;
   }
 }
